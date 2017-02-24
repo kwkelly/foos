@@ -1,0 +1,17 @@
+extends ./layout
+
+block content
+  .page-header
+    h3 Add a user
+  form.form-horizontal(id='add-player-form', method='POST')
+    p Note that this form is for adding users who can't have or don't want to have their own account. Players are encouraged to create an account. This action automagically creates a Player.
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='name') Name
+      .col-sm-7
+        input.form-control(type='text', name='name', id='name', placeholder='Player handle', autofocus, required)
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+          i.fa.fa-user-plus
+          | Add user

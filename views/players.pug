@@ -1,0 +1,18 @@
+extends ./layout
+
+block content
+  .page-header
+    h3 Player List
+    table.table.table-hover.table-sm
+      thead.table-inverse
+        tr
+          th Handle
+          th Rating
+        - var i = 0;
+        tbody
+          each player in players
+            tr(class=i % 2 == 0 ? 'odd' : 'even')
+              td
+                a(href='/profile/' + player.name)
+                  =player.name
+              td= player.eloRating

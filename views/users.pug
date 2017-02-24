@@ -1,0 +1,19 @@
+extends ./layout
+
+block content
+  .page-header
+    h3 User List
+    table.table.table-hover.table-sm
+      thead.table-inverse
+        tr
+          th Avatar
+          th Name
+          th Email
+        - var i = 0;
+        tbody
+          each user in users
+            tr(class=i % 2 == 0 ? 'odd' : 'even')
+              td
+                img(src=user.profile.picture || user.gravatar(), height="75", width="75").img-circle
+              td= user.profile.name
+              td= user.email
