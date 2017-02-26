@@ -233,6 +233,60 @@ exports.postLinkPlayer = (req, res, next) => {
 };
 
 /**
+ * POST /account/unlinkplayer
+ * Unlink a player from an account
+ */
+exports.postUnlinkPlayer = (req, res, next) => {
+	Player.findOne({account: req.user.id}, (err, player) => {
+		if (err) { return next(err); }
+		if(player == null) {
+			req.flash('errors', { msg: 'Could not find the player linked to your account. That is our bad.' });
+			return res.redirect('/account');
+		}
+		if(player.id != req.user.player){
+			req.flash('errors', { msg: 'Your account does not seem to point to that player. That is not right. That is our mistake' });
+			return res.redirect('/account');
+		}
+		player.account = undefined;
+		req.user.player = undefined;
+		player.save((err) => {
+			if (err) { return next(err); }
+		});
+		req.user.save((err) => {
+			if (err) { return next(err); }
+		});
+		req.flash('success', { msg: 'The player has been unlinked from your account.' });
+		res.redirect('/account');
+	});
+};
+
+/**
+ * POST /account/renameplayer
+ * Rename the player linked to your account
+ */
+exports.postRenamePlayer = (req, res, next) => {
+	/* first check to see if that player is linked */
+	console.log(req.body.renameplayer)
+	Player.findOne({name: req.body.currentname}, (err, player) => {
+		if(err) { next(err); }
+		if(player == null) {
+			req.flash('errors', { msg: 'Could not find player. Opps' });
+			return res.redirect('/account');
+		}
+		if(player.account != req.user.id) {
+			req.flash('errors', { msg: 'That player is not linked to your account so you cannot change the name.' });
+			return res.redirect('/account');
+		}
+		player.name = req.body.renameplayer;
+		player.save((err) => {
+			if (err) { return next(err); }
+		});
+		req.flash('success', { msg: 'Your player has been renamed.' });
+		res.redirect('/account');
+	});
+};
+
+/**
  * POST /account/addplayer
  * Add player to account
  */

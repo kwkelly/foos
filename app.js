@@ -33,6 +33,7 @@ dotenv.load({ path: '.env.example' });
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
 const playerController = require('./controllers/player');
+const matchController = require('./controllers/match');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 
@@ -133,8 +134,12 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/linkplayer', passportConfig.isAuthenticated, userController.postLinkPlayer);
 app.post('/account/addplayer', passportConfig.isAuthenticated, userController.postAddPlayer);
+app.post('/account/renameplayer', passportConfig.isAuthenticated, userController.postRenamePlayer);
+app.post('/account/unlinkplayer', passportConfig.isAuthenticated, userController.postUnlinkPlayer);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
+
+app.post('/addmatch', passportConfig.isAuthenticated, matchController.postMatch);
 
 app.get('/users', playerController.getUsers);
 app.get('/players', playerController.getPlayers)
@@ -142,6 +147,7 @@ app.get('/player/:handle', playerController.getPlayer)
 app.get('/player', playerController.getPlayer)
 app.post('/player', playerController.postPlayer)
 app.get('/profile/:name', playerController.getProfile)
+app.get('/match', matchController.getMatch);
 
 /**
  * API examples routes.

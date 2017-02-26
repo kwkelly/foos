@@ -50,6 +50,7 @@ block content
   if user.player
     form.form-horizontal(action='/account/renameplayer', method='POST')
       input(type='hidden', name='_csrf', value=_csrf)
+      input(type='hidden', name='currentname', id='currentname', value=player.name)
       .form-group
         label.col-sm-3.control-label(for='renameplayer') New Player
         .col-sm-7
@@ -58,7 +59,7 @@ block content
         .col-sm-offset-3.col-sm-4
           button.btn.btn-primary(type='submit')
             i.fa.fa-plus
-            | Rename your player
+            | Rename
 
     form.form-horizontal(action='/account/unlinkplayer', method='POST')
       .form-group

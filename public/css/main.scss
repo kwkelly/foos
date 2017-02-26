@@ -68,3 +68,98 @@ textarea {
 .fa {
   margin-right: 6px;
 }
+
+//.drop { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; border: solid 1px black; margin: 5px;}
+#select-container {text-align: center;}
+.placeholder {
+  width: 105px;
+  //padding: 0px;
+  height: 141px;
+  border: solid 1px gray;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: white;
+  margin: 5px 5px 5px 5px;
+  float: left;
+}
+
+.drop {
+  width: 105px;
+  //padding: 0px;
+  border: solid 1px gray;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: white;
+  margin: 5px 5px 5px 5px;
+  float: left;
+  img {
+    margin: auto;
+    width: 100px;
+    height: auto;
+  }
+}
+.caption {
+  pointer-events: none;
+}
+// .drop-zone {
+//   pointer-events: none;
+// }
+@media (max-width: 767px) {
+  #drag-zone {
+    width: 110px;
+    display: inline-block;
+    margin: auto
+  }
+  #drop-container {
+    height: 600px;
+    width: 110px;
+    display: inline-block;
+    margin: auto;
+    text-align: center;
+  }
+  .drop-zone {
+    height: 150px;
+    width: 115px;
+    display: inline-block;
+    margin: 10px
+  }
+}
+
+@media (min-width: 768px) {
+  #drag-zone {
+    height: 200px;
+    width: 100%;
+    display: inline-block;
+    margin: auto;
+    overflow-x: scroll;
+    white-space: nowrap;
+    //clear: left;
+  }
+  #drop-container {
+    height: 180px;
+    width: 900px;
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+  .drop-zone {
+    height: 150px;
+    width: 115px;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .over {
+    border: solid 1px black;
+  
+  }
+}
+
+.black-drop {
+  background-color: #22313F;
+  border-radius: 10px;
+}
+
+.red-drop {
+  background-color: #e74c3c;
+  border-radius: 10px;
+}

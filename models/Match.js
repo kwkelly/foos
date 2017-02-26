@@ -2,12 +2,14 @@ var mongoose = require('mongoose');
 
 
 const matchSchema = new mongoose.Schema({
-	red1:   { type: Schema.Types.ObjectId, ref: 'Player' },
-	red2:   { type: Schema.Types.ObjectId, ref: 'Player' },
-	black1: { type: Schema.Types.ObjectId, ref: 'Player' },
-	black2: { type: Schema.Types.ObjectId, ref: 'Player' },
+	red1:   { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
+	red2:   { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
+	black1: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
+	black2: { type: mongoose.Schema.Types.ObjectId, ref: 'Player' },
 	date: { type: Date, default: Date.now },
-	winner: String
+	winner: {type: String, enum: {values: ['red', 'black', 'neither']}},
+	redScore: Number,
+	blackScore: Number
 })
 
 matchSchema.methods.getWinners = function() {

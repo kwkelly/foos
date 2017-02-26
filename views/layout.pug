@@ -9,6 +9,9 @@ html
     title #{title} - Hackathon Starter
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
+    link(rel='stylesheet', href='/css/lib/jquery-ui.min.css')
+    link(rel='stylesheet', href='/css/lib/jquery-ui.structure.min.css')
+    link(rel='stylesheet', href='/css/lib/bootstrap-datepicker3.min.css')
 
   body
     include partials/header
@@ -20,7 +23,10 @@ html
     include partials/footer
 
     script(src='/js/lib/jquery-2.2.4.min.js')
+    script(src='/js/lib/jquery-ui.min.js')
+    script(src='/js/lib/jquery.ui.touch-punch.min.js')
     script(src='/js/lib/bootstrap.min.js')
+    script(src='/js/lib/bootstrap-datepicker.min.js')
     script(src='/js/main.js')
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID
