@@ -20,11 +20,9 @@ if (process.env.VCAP_SERVICES) {
   mongo = {
     db:       'test',
     host:     'localhost',
-    password: 'pass',
     port:     27017,
     ssl:      false,
     url:      'mongodb://localhost:27017/test',
-    username: 'admin',
   };
 }
 

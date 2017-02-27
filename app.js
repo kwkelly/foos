@@ -85,13 +85,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-// app.use((req, res, next) => {
-//   if (req.path === '/api/upload') {
-//     next();
-//   } else {
-//     lusca.csrf()(req, res, next);
-//   }
-// });
+app.use((req, res, next) => {
+  if (req.path === '/api/upload' || req.path == '/admin') {
+    next();
+  } else {
+    lusca.csrf()(req, res, next);
+  }
+});
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use((req, res, next) => {
@@ -235,7 +235,7 @@ app.get('/auth/pinterest/callback', passport.authorize('pinterest', { failureRed
 });
 
 var mongo_express = require('mongo-express/lib/middleware')
-var mongo_express_config = require('./mongo_express_config')
+var mongo_express_config = require(process.env.ADMIN_CONFIG)
 
 app.use('/admin', passportConfig.isAdmin, mongo_express(mongo_express_config))
 

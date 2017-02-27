@@ -427,16 +427,16 @@ exports.postReset = (req, res, next) => {
     },
     function sendResetPasswordEmail(user, done) {
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: 'mailgun',
         auth: {
-          user: process.env.GMAIL_USER,
-          pass: process.env.GMAIL_PASSWORD
+          user: process.env.MAILGUN_USER,
+          pass: process.env.MAILGUN_PASSWORD
         }
       });
       const mailOptions = {
         to: user.email,
-        from: 'hackathon@starter.com',
-        subject: 'Your Hackathon Starter password has been changed',
+        from: 'noreply@fooskeeper.com',
+        subject: 'Your FoosKeeper password has been changed',
         text: `Hello,\n\nThis is a confirmation that the password for your account ${user.email} has just been changed.\n`
       };
       transporter.sendMail(mailOptions, (err) => {
@@ -501,16 +501,16 @@ exports.postForgot = (req, res, next) => {
     },
     function sendForgotPasswordEmail(token, user, done) {
       const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: 'mailgun',
         auth: {
-          user: process.env.GMAIL_USER,
-          pass: process.env.GMAIL_PASSWORD
+          user: process.env.MAILGUN_USER,
+          pass: process.env.MAILGUN_PASSWORD
         }
       });
       const mailOptions = {
         to: user.email,
-        from: 'donotreplay@foosballapp.com',
-        subject: 'Reset your password on FoosballApp',
+        from: 'noreplyy@fooskeeper.com',
+        subject: 'Reset your password on FoosKeeper',
         text: `You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n
           Please click on the following link, or paste this into your browser to complete the process:\n\n
           http://${req.headers.host}/reset/${token}\n\n

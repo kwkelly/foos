@@ -74,4 +74,14 @@ $(document).ready(function() {
   $('.input-group.date').datepicker(
     'update', new Date()
   )
+
+  // $(document).ready(function() {
+  //   if($(window).width() > 515) {
+  //     $(".hero").attr("src", "/public/images/foosball-white.png");
+  //   } else {
+  //     $("#img").attr("src", "small.png");
+  //   }
+  // }); 
+
+
 });
