@@ -1,0 +1,40 @@
+extends ./layout
+
+block content
+  .page-header
+    h3 Match
+  form.form-horizontal(action='/addmatch' id='match-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      p.col-sm-offset-3 Drag and drop the player cards on to the positions to add the match
+      div(id="select-container")
+        div(id="drag-zone")
+          each player in players
+            span.drop
+              span.caption
+                if player.account
+                  img(src=player.account.profile.picture || player.account.gravatar(), alt=player.name)
+                else
+                  img(src=player.gravatar(), alt=player.name)
+                h4.card-title= player.name
+        div(id="drop-container")
+          div.drop-zone.red-drop.red1
+          div.drop-zone.red-drop.red2
+          div.drop-zone.black-drop.black2
+          div.drop-zone.black-drop.black1
+        div.input-group.col-sm-4.scores.col-sm-offset-4
+          input.form-control.score(type="number", name="redscore", id="redscore", placeholder="Red score")
+          span.input-group-addon -
+          input.form-control.score(type="number", name="blackscore", id="blackscore", placeholder="Black score")
+        div.input-group.date.input-group.col-sm-4.scores.col-sm-offset-4
+          input.form-control(type="text" name="date")
+          span.input-group-addon
+              i.fa.fa-calendar
+        input(type='hidden', name='red1')
+        input(type='hidden', name='red2')
+        input(type='hidden', name='black1')
+        input(type='hidden', name='black2')
+
+        button.btn.btn-success(type='submit', id="matchsubmit", disabled="true")
+          i.fa.fa-gamepad
+          | Add match
