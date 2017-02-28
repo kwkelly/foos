@@ -50,7 +50,6 @@ const app = express();
 /**
  * Connect to MongoDB.
  */
-console.log(process.env.MONGODB_URI)
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
 mongoose.connection.on('error', () => {
@@ -181,10 +180,10 @@ app.get('/auth/microsoft/callback', passport.authenticate('azuread-openidconnect
 });
 
 
-//var mongo_express = require('mongo-express/lib/middleware')
-//var mongo_express_config = require(process.env.ADMIN_CONFIG)
+var mongo_express = require('mongo-express/lib/middleware')
+var mongo_express_config = require(process.env.ADMIN_CONFIG)
 
-//app.use('/admin', passportConfig.isAdmin, mongo_express(mongo_express_config))
+app.use('/admin', passportConfig.isAdmin, mongo_express(mongo_express_config))
 
 /**
  * Error Handler.

@@ -1,12 +1,12 @@
 {
-  "name": "hackathon-starter",
+  "name": "fooskeeper",
   "version": "4.3.0",
-  "description": "A boilerplate for Node.js web applications",
+  "description": "A web app for keeping track of foosball scores",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sahat/hackathon-starter.git"
+    "url": "https://github.com/kwkelly/foos/"
   },
-  "author": "Sahat Yalkabov",
+  "author": "Keith Kelly",
   "license": "MIT",
   "scripts": {
     "start": "node app.js",
