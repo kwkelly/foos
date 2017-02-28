@@ -178,12 +178,21 @@ textarea {
     position: absolute;
     top: 0;
     left: 0;
+		height: 100%;
     padding: 10px 20px;
     background: rgba(255,255,255, 0.5);
-    text-align: center;
     display: block;
     width: 100%;
-    top: 25vw;
+    text-align: center;
+    //top: 25vw;
+		.overlay-content {
+			position: absolute;
+			top: 15vw;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+		}
   .headline {
     margin-bottom: 10px;
   }
