@@ -266,7 +266,6 @@ exports.postUnlinkPlayer = (req, res, next) => {
  */
 exports.postRenamePlayer = (req, res, next) => {
 	/* first check to see if that player is linked */
-	console.log(req.body.renameplayer)
 	Player.findOne({name: req.body.currentname}, (err, player) => {
 		if(err) { next(err); }
 		if(player == null) {
@@ -294,7 +293,6 @@ exports.postAddPlayer = (req, res, next) => {
 	/* first check to see if that player is linked */
   req.assert('addplayer', 'Name must be at least 4 characters long').len(4);
   const errors = req.validationErrors();
-  console.log(req.body.addplayer)
   if (errors) {
     req.flash('errors', errors);
     return res.redirect('/account');

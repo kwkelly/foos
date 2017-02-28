@@ -22,7 +22,6 @@ exports.getPlayer = (req, res) => {
 exports.postPlayer = (req, res, next) => {
   req.assert('name', 'Name must be at least 4 characters long').len(4);
   const errors = req.validationErrors();
-  console.log(req.body.name)
   if (errors) {
     req.flash('errors', errors);
     return res.redirect('/player');
@@ -57,12 +56,12 @@ exports.getProfile = (req, res) => {
 };
 
 /**
- * GET /players
- * List all the players
+ * GET /rankings
+ * List all the players and rankings
  */
-exports.getPlayers = (req, res) => {
+exports.getRankings = (req, res) => {
   Player.find({}, function(err, players) {
-    res.render('players', {players: players});
+    res.render('rankings', {players: players});
   });
 };
 
