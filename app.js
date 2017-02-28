@@ -25,7 +25,7 @@ const upload = multer({ dest: path.join(__dirname, 'uploads') });
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
  */
-dotenv.load({ path: '.env.deploy' });
+dotenv.load({ path: '.env.example' });
 
 /**
  * Controllers (route handlers).
@@ -118,6 +118,7 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  * Primary app routes.
  */
 app.get('/', homeController.index);
+app.get('/about', homeController.about);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
@@ -139,15 +140,15 @@ app.post('/account/unlinkplayer', passportConfig.isAuthenticated, userController
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 
-app.post('/addmatch', passportConfig.isAuthenticated, matchController.postMatch);
 
 app.get('/users', playerController.getUsers);
-app.get('/players', playerController.getPlayers)
-app.get('/player/:handle', playerController.getPlayer)
-app.get('/player', playerController.getPlayer)
-app.post('/player', playerController.postPlayer)
-app.get('/profile/:name', playerController.getProfile)
-app.get('/match', matchController.getMatch);
+app.get('/rankings', passportConfig.isAuthenticated, playerController.getRankings)
+app.get('/player/:handle', passportConfig.isAuthenticated, playerController.getPlayer)
+app.get('/player', passportConfig.isAuthenticated, playerController.getPlayer)
+app.post('/player', passportConfig.isAuthenticated, playerController.postPlayer)
+app.get('/profile/:name', passportConfig.isAuthenticated, playerController.getProfile)
+app.get('/match', passportConfig.isAuthenticated, matchController.getMatch);
+app.post('/addmatch', passportConfig.isAuthenticated, matchController.postMatch);
 
 /**
  * API examples routes.
