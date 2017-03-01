@@ -302,20 +302,20 @@ passport.use(new OIDCStrategy({
         identityMetadata: 'https://login.microsoftonline.com/4804b0ac-137c-4b2a-95c1-430066b4506a/v2.0/.well-known/openid-configuration',
         skipUserProfile: true,
         responseType: 'code',
-        validateIssuer: false,
-				issuer: null,
+        validateIssuer: true,
+	issuer: null,
         responseMode: 'query',
-				passReqToCallback: true,
-				allowHttpForRedirectUrl: true,
+	passReqToCallback: true,
+	allowHttpForRedirectUrl: true,
         scope: ['User.Read', 'Profile']
 }, (req, iss, sub, profile, accessToken, refreshToken, done) => {
-	console.log('req: ' + req);
-	console.log('iss: ' + iss);
-	console.log('sub: ' + sub);
-	console.log(profile);
-	console.log('accessToken: ' + accessToken);
-	console.log('refreshToken: ' + refreshToken);
-	console.log('done: ' + done);
+	//console.log('req: ' + req);
+	//console.log('iss: ' + iss);
+	//console.log('sub: ' + sub);
+	//console.log(profile);
+	//console.log('accessToken: ' + accessToken);
+	//console.log('refreshToken: ' + refreshToken);
+	//console.log('done: ' + done);
   if (req.user) {
     User.findOne({ microsoft: profile.oid }, (err, existingUser) => {
       if (err) { return done(err); }
