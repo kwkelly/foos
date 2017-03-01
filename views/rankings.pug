@@ -14,6 +14,11 @@ block content
           each player in players
             tr(class=i % 2 == 0 ? 'odd' : 'even')
               td
+                if player.account
+                  img.rankings.img-circle(src=player.account.profile.picture || player.account.gravatar(), alt=player.name)
+                else
+                  img.rankings.img-circle(src=player.gravatar(), alt=player.name)
+              td
                 a(href='/profile/' + player.name)
                   =player.name
               td= player.eloRating

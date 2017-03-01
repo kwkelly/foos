@@ -1,7 +1,7 @@
 @import "themes/default/variables";
 
-@import "lib/bootstrap/bootstrap";
-@import "lib/font-awesome/font-awesome";
+@import "../components/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../components/font-awesome/scss/font-awesome";
 
 @import "themes/default/default";
 
@@ -227,4 +227,9 @@ textarea {
     display: block;
     margin-bottom: 20px;
   }
+}
+
+img.rankings {
+  width: 50px;
+  height: auto;
 }

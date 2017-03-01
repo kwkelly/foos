@@ -9,9 +9,8 @@ html
     title #{title} - FoosKeeper
     link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
-    link(rel='stylesheet', href='/css/lib/jquery-ui.min.css')
-    link(rel='stylesheet', href='/css/lib/jquery-ui.structure.min.css')
-    link(rel='stylesheet', href='/css/lib/bootstrap-datepicker3.min.css')
+    link(rel='stylesheet', href='/components/jquery-ui/themes/base/jquery-ui.min.css')
+    link(rel='stylesheet', href='/components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css')
 
   body
     include partials/header
@@ -22,11 +21,11 @@ html
 
     include partials/footer
 
-    script(src='/js/lib/jquery-2.2.4.min.js')
-    script(src='/js/lib/jquery-ui.min.js')
-    script(src='/js/lib/jquery.ui.touch-punch.min.js')
-    script(src='/js/lib/bootstrap.min.js')
-    script(src='/js/lib/bootstrap-datepicker.min.js')
+    script(src='/components/jquery/dist/jquery.min.js')
+    script(src='/components/jquery-ui/jquery-ui.min.js')
+    script(src='/components/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')
+    script(src='/components/bootstrap/dist/js/bootstrap.min.js')
+    script(src='/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
     script(src='/js/main.js')
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID

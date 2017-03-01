@@ -1,0 +1,31 @@
+{
+  "name": "fooskeeper",
+  "description": "A web app for keeping track of foosball scores",
+  "main": "app.js",
+  "authors": [
+    "Keith Kelly"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "foosball",
+    "app"
+  ],
+  "homepage": "https://github.com/kwkelly/foos",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-datepicker": "^1.6.4",
+    "jquery-ui-touch-punch": "*",
+    "bootstrap": "^3.3.7",
+    "jquery-ui": "^1.12.1",
+    "jquery": "^3.1.1",
+    "bootstrap-sass": "^3.3.7",
+    "bootstrap-social": "^5.1.1"
+  }
+}

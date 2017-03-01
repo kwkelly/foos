@@ -60,19 +60,18 @@ exports.getProfile = (req, res) => {
  * List all the players and rankings
  */
 exports.getRankings = (req, res) => {
-  Player.find({}, function(err, players) {
-    res.render('rankings', {players: players});
-  });
+  Player.find({})
+    .populate('account')
+    .exec(function(err, players) {
+      res.render('rankings', {
+        title: 'Rankings',
+        players: players
+      });
+    });
 };
 
 exports.getUsers = (req, res) => {
   User.find({}, function(err, users) {
-    var userMap = {};
-
-    users.forEach(function(user) {
-      userMap[user._id] = user;
-    });
-
     res.render('users', {users: users});
   });
 };
