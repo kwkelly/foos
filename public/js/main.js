@@ -30,6 +30,7 @@ function updateMatchFormVals() {
 
 $(document).ready(function() {
   // cards and matches and stuff
+  // http://codepen.io/neagle/pen/fuIqs
   $( function(){
     $("#drag-zone").sortable({
       connectWith: '.drop-zone',

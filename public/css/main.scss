@@ -69,29 +69,18 @@ textarea {
   margin-right: 6px;
 }
 
-//.drop { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 10px 10px 10px 0; border: solid 1px black; margin: 5px;}
 #select-container {text-align: center;}
-.placeholder {
-  width: 105px;
-  //padding: 0px;
-  height: 141px;
-  border: solid 1px gray;
-  border-radius: 5px;
-  display: inline-block;
-  background-color: white;
-  margin: 5px 5px 5px 5px;
-  float: left;
-}
 
 .drop {
   width: 105px;
-  //padding: 0px;
+  //padding: 10px;
   border: solid 1px gray;
   border-radius: 5px;
   display: inline-block;
   background-color: white;
   margin: 5px 5px 5px 5px;
-  float: left;
+  //float: left;
+  vertical-align: top;
   img {
     margin: auto;
     width: 100px;
@@ -101,43 +90,67 @@ textarea {
 .caption {
   pointer-events: none;
 }
+.contain2 {
+  pointer-events: none;
+}
 // .drop-zone {
 //   pointer-events: none;
 // }
 @media (max-width: 767px) {
   #drag-zone {
-    width: 110px;
+    width: 120px;
     display: inline-block;
-    margin: auto
+    margin: 10px;
+    float: left;
+    clear: both;
   }
   #drop-container {
     height: 600px;
-    width: 110px;
+    width: 180px;
     display: inline-block;
     margin: auto;
     text-align: center;
+    vertical-align: top;
+    float: right;
   }
   .drop-zone {
     height: 150px;
     width: 115px;
     display: inline-block;
-    margin: 10px
+    margin: 10px;
+    float: right;
+  }
+  .super-contain {
+    max-width: 50%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 90vh;
+    float: left;
+  }
+  .fields {
+    margin-top: 100px;
+    clear: both;
   }
 }
 
 @media (min-width: 768px) {
   #drag-zone {
-    height: 200px;
-    width: 100%;
+    width: 98%;
     display: inline-block;
-    margin: auto;
+    overflow: auto;
+    margin: 10px;
+    float: left;
+    clear: both;
+  }
+  .super-contain {
+    max-width: 100%;
     overflow-x: scroll;
+    overflow-y: hidden;
     white-space: nowrap;
-    //clear: left;
   }
   #drop-container {
     height: 180px;
-    width: 900px;
+    width: 500px;
     display: block;
     margin: auto;
     text-align: center;
@@ -147,6 +160,7 @@ textarea {
     width: 115px;
     display: inline-block;
     margin-right: 10px;
+    float: left;
   }
   .over {
     border: solid 1px black;
@@ -165,37 +179,47 @@ textarea {
 }
 
 .hero {
-  width: 100vw;
+  min-width: 100vw;
+  max-height: 95vh;
+  min-height: 95vh;
   position: relative;
   font-family: Arial;
-	float: left;
-  img {
-    width: 100vw;
-    height: auto;
+  float: left;
+  // img {
+  //   width: 100vw;
+  //   height: auto;
+  // }
+  @media (min-width: 768px) {
+    background-image: url("/images/foosball-white-1600.jpg");
+    background-size: cover;
+  }
+  @media (max-width: 768px) {
+    background-image: url("/images/foosball-white-169-small.jpg");
+    background-size: cover;
   }
 }
 .overlay {
     position: absolute;
     top: 0;
     left: 0;
-		height: 100%;
+    height: 100%;
     padding: 10px 20px;
     background: rgba(255,255,255, 0.5);
     display: block;
     width: 100%;
     text-align: center;
     //top: 25vw;
-		.overlay-content {
-			position: absolute;
-			top: 15vw;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			margin: auto;
-		}
-	a {
-		margin: 10px;
-	}
+    .overlay-content {
+      position: absolute;
+      top: 15vw;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+    }
+  a {
+    margin: 10px;
+  }
   .headline {
     margin-bottom: 10px;
   }
