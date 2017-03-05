@@ -3,8 +3,8 @@ function matchButtonEnableDisable(){
     ($('.drop-zone').find('.drop').length == 4) &&
     (((($('#redscore').val() == 10) && ($('#blackscore').val() < 10)) ||
       (($('#redscore').val() < 10) && ($('#blackscore').val() == 10))) ||
-    ((($('#redscore').val() == "winner") && ($('#blackscore').val() == "")) ||
-      (($('#redscore').val() == "") && ($('#blackscore').val() == "winner"))))
+      ((($('#redscore').val() == "winner") && ($('#blackscore').val() == "")) ||
+        (($('#redscore').val() == "") && ($('#blackscore').val() == "winner"))))
   ){
     $('#matchsubmit').prop('disabled', false);
   }
@@ -64,59 +64,46 @@ $(document).ready(function() {
       });
     });
   });
-  
+
   // enable the submit button on the match page based on editing the score boxes
   $( function(){
     $(".score").on('change keyup paste',matchButtonEnableDisable);
   });
 
-  $('.input-group.date').datepicker({
-  });
-  $('.input-group.date').datepicker(
-    'update', new Date()
-  )
+  // $('.input-group.date').datepicker({
+  // });
+  // $('.input-group.date').datepicker(
+  //   'update', new Date()
+  // )
+  $('#pickadate').pickadate();
+  new Darkroom('#target', {
+    // Canvas initialization size
+    minWidth: 100,
+    minHeight: 100,
+    maxWidth: 500,
+    maxHeight: 500,
 
-  // $(document).ready(function() {
-  //   if($(window).width() > 515) {
-  //     $(".hero").attr("src", "/public/images/foosball-white.png");
-  //   } else {
-  //     $("#img").attr("src", "small.png");
-  //   }
-  // }); 
-  // new Darkroom('#target', {
-  //   // Canvas initialization size
-  //   minWidth: 160,
-  //   minHeight: 160,
-  //   maxWidth: 900,
-  //   maxHeight: 900,
- new Darkroom('#target', {
-  // Canvas initialization size
-  minWidth: 100,
-  minHeight: 100,
-  maxWidth: 500,
-  maxHeight: 500,
-
-   // Plugins options
-   plugins: {
-     crop: {
-       minHeight: 50,
-       minWidth: 50,
-       ratio: 1
-     },
-     save: {
-       callback: function(){
-         console.log('hello');
-         console.log(Cookies.get('_csrf'));
-         $.ajax({
-           type: "POST",
-           url: '/account/editedpicture',
-           data: {data: this.darkroom.sourceCanvas.toDataURL()},
-           headers: {
-             'X-CSRF-Token': Cookies.get('_csrf')
-           }
-         });
-       }
-     }
-   },
- }); // });
+    // Plugins options
+    plugins: {
+      crop: {
+        minHeight: 50,
+        minWidth: 50,
+        ratio: 1
+      },
+      save: {
+        callback: function(){
+          console.log('hello');
+          console.log(Cookies.get('_csrf'));
+          $.ajax({
+            type: "POST",
+            url: '/account/editedpicture',
+            data: {data: this.darkroom.sourceCanvas.toDataURL()},
+            headers: {
+              'X-CSRF-Token': Cookies.get('_csrf')
+            }
+          });
+        }
+      }
+    },
+  }); // });
 });

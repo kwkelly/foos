@@ -25,11 +25,11 @@ block content
           div.drop-zone.black-drop.black1
         div.fields
           div.input-group.col-sm-4.scores.col-sm-offset-4
-            input.form-control.score(type="number", name="redscore", id="redscore", placeholder="Red score")
+            input.form-control.score(type="text", name="redscore", id="redscore", placeholder="Red score")
             span.input-group-addon -
-            input.form-control.score(type="number", name="blackscore", id="blackscore", placeholder="Black score")
+            input.form-control.score(type="text", name="blackscore", id="blackscore", placeholder="Black score")
           div.input-group.date.input-group.col-sm-4.scores.col-sm-offset-4
-            input.form-control(type="text" name="date")
+            input.form-control(type="text" name="date" id='pickadate')
             span.input-group-addon
                 i.fa.fa-calendar
         input(type='hidden', name='red1')

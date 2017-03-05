@@ -20,7 +20,6 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap-datepicker": "^1.6.4",
     "jquery-ui-touch-punch": "*",
     "bootstrap": "^3.3.7",
     "jquery-ui": "^1.12.1",
@@ -28,6 +27,7 @@
     "bootstrap-sass": "^3.3.7",
     "bootstrap-social": "^5.1.1",
     "darkroom": "^2.0.1",
-    "js-cookie": "^2.1.3"
+    "js-cookie": "^2.1.3",
+    "pickadate": "^3.5.6"
   }
 }

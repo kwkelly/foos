@@ -7,13 +7,13 @@ const User = require('../models/User');
 const Match = require('../models/Match');
 
 function getExpectation(rating_1, rating_2){
-	var calc = (1.0 / (1.0 + Math.pow(10, ((rating_2 - rating_1) / 1000))));
-	return calc;
+  var calc = (1.0 / (1.0 + Math.pow(10, ((rating_2 - rating_1) / 1000))));
+  return calc;
 };
 
 function modifyRating(oldRating, expected, result, kFactor){
-	var newRating = (oldRating + kFactor * (result - expected));
-	return newRating;
+  var newRating = (oldRating + kFactor * (result - expected));
+  return newRating;
 };
 
 /**
@@ -106,44 +106,44 @@ exports.postMatch = (req, res, next) => {
           match.save((err) => {
             if (err) { return next(err); }
           });
-					red1.gamesPlayed++;
-					red2.gamesPlayed++;
-					black1.gamesPlayed++;
-					black2.gamesPlayed++;
-					if(winner == "black"){
-						var winnerAvg = (black1.eloRating + black2.eloRating)/2;
-						var loserAvg = (red1.eloRating + red2.eloRating)/2;
-						var winnerExp = getExpectation(winnerAvg, loserAvg);
-						var loserExp = getExpectation(loserAvg, winnerAvg);
-						black1.eloRating = modifyRating(black1.eloRating, winnerExp, 1, 50);
-						black2.eloRating = modifyRating(black2.eloRating, winnerExp, 1, 50);
-						red1.eloRating = modifyRating(red1.eloRating, loserExp, 0, 50);
-						red2.eloRating = modifyRating(red2.eloRating, loserExp, 0, 50);
-					}
-					if(winner == "red"){
-						var winnerAvg = (red1.eloRating + red2.eloRating)/2;
-						var loserAvg = (black1.eloRating + black2.eloRating)/2;
-						var winnerExp = getExpectation(winnerAvg, loserAvg);
-						var loserExp = getExpectation(loserAvg, winnerAvg);
-						black1.eloRating = modifyRating(black1.eloRating,loserExp, 0, 50);
-						black2.eloRating = modifyRating(black2.eloRating, loserExp, 0, 50);
-						red1.eloRating = modifyRating(red1.eloRating, winnerExp, 1, 50);
-						red2.eloRating = modifyRating(red2.eloRating, winnerExp, 1, 50);
-					}
+          red1.gamesPlayed++;
+          red2.gamesPlayed++;
+          black1.gamesPlayed++;
+          black2.gamesPlayed++;
+          if(winner == "black"){
+            var winnerAvg = (black1.eloRating + black2.eloRating)/2;
+            var loserAvg = (red1.eloRating + red2.eloRating)/2;
+            var winnerExp = getExpectation(winnerAvg, loserAvg);
+            var loserExp = getExpectation(loserAvg, winnerAvg);
+            black1.eloRating = modifyRating(black1.eloRating, winnerExp, 1, 50);
+            black2.eloRating = modifyRating(black2.eloRating, winnerExp, 1, 50);
+            red1.eloRating = modifyRating(red1.eloRating, loserExp, 0, 50);
+            red2.eloRating = modifyRating(red2.eloRating, loserExp, 0, 50);
+          }
+          if(winner == "red"){
+            var winnerAvg = (red1.eloRating + red2.eloRating)/2;
+            var loserAvg = (black1.eloRating + black2.eloRating)/2;
+            var winnerExp = getExpectation(winnerAvg, loserAvg);
+            var loserExp = getExpectation(loserAvg, winnerAvg);
+            black1.eloRating = modifyRating(black1.eloRating,loserExp, 0, 50);
+            black2.eloRating = modifyRating(black2.eloRating, loserExp, 0, 50);
+            red1.eloRating = modifyRating(red1.eloRating, winnerExp, 1, 50);
+            red2.eloRating = modifyRating(red2.eloRating, winnerExp, 1, 50);
+          }
           red1.save((err) => {
             if (err) { return next(err); }
-					});
+          });
           red2.save((err) => {
             if (err) { return next(err); }
-					});
+          });
           black1.save((err) => {
             if (err) { return next(err); }
-					});
+          });
           black2.save((err) => {
             if (err) { return next(err); }
-					});
-					req.flash('success', { msg: 'Match added' });
-					return res.redirect('/match')
+          });
+          req.flash('success', { msg: 'Match added' });
+          return res.redirect('/match')
         });
       });
     });
