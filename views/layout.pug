@@ -14,9 +14,9 @@ html
 
   body
     include partials/header
+    include partials/flash
     block hero
     .container
-      include partials/flash
       block content
 
     include partials/footer
@@ -26,6 +26,9 @@ html
     script(src='/components/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js')
     script(src='/components/bootstrap/dist/js/bootstrap.min.js')
     script(src='/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')
+    script(src='/components/fabric/dist/fabric.min.js')
+    script(src='/components/darkroom/build/darkroom.js')
+    script(src='/components/js-cookie/src/js.cookie.js')
     script(src='/js/main.js')
 
     // Google Analytics: change UA-XXXXX-X to be your site's ID

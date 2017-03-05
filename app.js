@@ -19,8 +19,64 @@ const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
+const crypto = require('crypto');
+const mime = require('mime');
 
-const upload = multer({ dest: path.join(__dirname, 'uploads') });
+const storage = multer.diskStorage({
+  // from: https://github.com/expressjs/multer/issues/170
+  destination: './uploads/fullsize',
+  filename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      cb(null, raw.toString('hex') + Date.now() + '.' + mime.extension(file.mimetype));
+    });
+  }
+});
+const upload = multer({
+  //dest: path.join(__dirname, 'public/uploads/fullsize'),
+  limits: {
+    fileSize: 2097152
+  },
+  fileFilter: (req, file, cb) => {
+    var mimetypes = {
+      jpg: 'image/jpeg',
+      png: 'image/png',
+      gif: 'image/gif'
+    };
+    var mimetype = file.mimetype;
+    console.log(mimetype)
+    if(!(mimetype == mimetypes.jpg ||
+      mimetype == mimetypes.png ||
+      mimetype == mimetypes.gif)){
+      console.log(__dirname)
+      // fs.unlink('/t', (err) => {
+      //   if (err) throw err;
+      //   console.log('successfully deleted /tmp/hello');
+      // });
+      var err= new Error('Please only upload jpg, gif, or png');
+      err.code = "WRONG_TYPE";
+      return cb(err);
+    }
+    return cb(null, true);
+  },
+  storage: storage
+});
+
+/**
+ * Error handler for teh multer uploader 
+ */
+var uploadErr = (err, req, res, next) => {
+  if(err.code == 'LIMIT_FILE_SIZE'){
+    req.flash('errors', { msg: 'That file is too big!' });
+    return res.redirect('/account');
+  } else if (err.code == 'WRONG_TYPE') {
+    req.flash('errors', { msg: 'Please only upload images.' });
+    return res.redirect('/account');
+  } else {
+    req.flash('success', { msg: 'Profile picture updated successfully.' });
+    next();
+  }
+}
+
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -64,6 +120,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(expressStatusMonitor());
+app.use(bodyParser({limit: '10mb'}));
 app.use(compression());
 app.use(sass({
   src: path.join(__dirname, 'public'),
@@ -86,10 +143,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
-  if (req.path === '/api/upload' || req.path == '/admin') {
+  if (req.path === '/api/upload' || req.path.match(/^\/admin/i) || req.path == '/account/profilepicture') {
     next();
   } else {
-    lusca.csrf()(req, res, next);
+    lusca.csrf({cookie: "_csrf"})(req, res, next);
   }
 });
 app.use(lusca.xframe('SAMEORIGIN'));
@@ -113,6 +170,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+app.use(express.static(path.join(__dirname, 'uploads'), { maxAge: 31557600000 }));
 
 /**
  * Primary app routes.
@@ -126,6 +184,8 @@ app.get('/forgot', userController.getForgot);
 app.post('/forgot', userController.postForgot);
 app.get('/reset/:token', userController.getReset);
 app.post('/reset/:token', userController.postReset);
+app.get('/activate/:token', userController.getActivate);
+app.post('/activate/:token', userController.postActivate);
 app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
 app.get('/contact', contactController.getContact);
@@ -137,6 +197,8 @@ app.post('/account/linkplayer', passportConfig.isAuthenticated, userController.p
 app.post('/account/addplayer', passportConfig.isAuthenticated, userController.postAddPlayer);
 app.post('/account/renameplayer', passportConfig.isAuthenticated, userController.postRenamePlayer);
 app.post('/account/unlinkplayer', passportConfig.isAuthenticated, userController.postUnlinkPlayer);
+app.post('/account/profilepicture', passportConfig.isAuthenticated, upload.single('myFile'), uploadErr, userController.postProfilePicture);
+app.post('/account/editedpicture', passportConfig.isAuthenticated, userController.postEditedProfilePicture);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
 

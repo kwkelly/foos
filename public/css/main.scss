@@ -2,6 +2,7 @@
 
 @import "../components/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "../components/font-awesome/scss/font-awesome";
+@import "../components/darkroom/lib/css/darkroom.scss";
 
 @import "themes/default/default";
 
@@ -51,9 +52,11 @@ textarea {
 // Navbar
 // -------------------------
 
-.navbar-nav img {
-  width: 30px;
-  height: 30px;
+#nav-img {
+  max-width: 30px;
+  max-height: 30px;
+  width: auto;
+  height: auto;
   margin: -15px 15px -15px;
 }
 
@@ -94,7 +97,9 @@ textarea {
   vertical-align: top;
   img {
     margin: auto;
-    width: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    width: auto;
     height: auto;
   }
 }
@@ -242,4 +247,8 @@ textarea {
 img.rankings {
   width: 50px;
   height: auto;
+}
+
+.image-container {
+  padding-top: 40px;
 }

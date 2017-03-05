@@ -35,14 +35,47 @@ block content
       .col-sm-7
         input.form-control(type='text', name='website', id='website', value=user.profile.website)
     .form-group
-      label.col-sm-3.control-label Gravatar
-      .col-sm-4
-        img(src=user.gravatar(), class='profile', width='100', height='100')
-    .form-group
       .col-sm-offset-3.col-sm-4
         button.btn.btn.btn-primary(type='submit')
           i.fa.fa-pencil
           | Update Profile
+
+  .page-header
+    h3 Picture
+  form.form-horizontal(action="/account/profilepicture" role='form', enctype='multipart/form-data', method='POST')
+    //input(type='hidden', name='_csrf', value=_csrf)
+    // .form-group
+    //   label.col-sm-3.control-label Picture
+    //   .col-sm-4
+    //     img(src=user.profile.picture || user.gravatar(), class='profile', style="max-width: 100px; max-height: 100px;")
+    .form-group
+      label.col-sm-3.control-label File Input
+      input(type='file', name='myFile', accept='image/jpeg,image/png,image/gif')
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-camera-retro
+          | Upload picture
+
+    if user.profile.picture
+      //- figure needed for darkroom.js
+      form.form-horizontal(action='/account/editpicture'  method='POST', enctype='multipart/form-data', id='croppedImageForm' role='form')
+        .form-group
+          label.col-sm-3.control-label Edit
+          .col-sm-4
+            .figure-wrapper
+              figure(class='image-container', id='imageContainer')
+                //specify source from where it should load the uploaded image
+                img(class='targetImg img-responsive', src=user.profile.picture, id='target')
+        .form-group
+          .col-sm-offset-3.col-sm-4
+            input(type='hidden', name='refNumber', id='refNumber', value='#{refNumber}')
+            input(type='hidden', id='encodedImageValue', name='croppedImage')
+            br
+            //input(type='submit', value='Upload Cropped Image', id='submitCroppedImage' data-role='button')
+            // button.btn.btn.btn-primary(type='submit')
+            //   i.fa.fa-camera-retro
+            //   | Update picture
 
   .page-header
     h3 Player

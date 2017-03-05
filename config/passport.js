@@ -296,26 +296,19 @@ passport.use(new LinkedInStrategy({
  * https://github.com/AzureAD/passport-azure-ad/blob/master/lib/oidcstrategy.js
  */
 passport.use(new OIDCStrategy({
-        redirectUrl: process.env.MS_REDIRECT_URL,
-        clientID: process.env.MS_ID,
-        clientSecret: process.env.MS_SECRET,
-        identityMetadata: 'https://login.microsoftonline.com/4804b0ac-137c-4b2a-95c1-430066b4506a/v2.0/.well-known/openid-configuration',
-        skipUserProfile: true,
-        responseType: 'code',
-        validateIssuer: true,
-	issuer: null,
-        responseMode: 'query',
-	passReqToCallback: true,
-	allowHttpForRedirectUrl: true,
-        scope: ['User.Read', 'Profile']
+  redirectUrl: process.env.MS_REDIRECT_URL,
+  clientID: process.env.MS_ID,
+  clientSecret: process.env.MS_SECRET,
+  identityMetadata: 'https://login.microsoftonline.com/4804b0ac-137c-4b2a-95c1-430066b4506a/v2.0/.well-known/openid-configuration',
+  skipUserProfile: true,
+  responseType: 'code',
+  validateIssuer: true,
+  issuer: null,
+  responseMode: 'query',
+  passReqToCallback: true,
+  allowHttpForRedirectUrl: true,
+  scope: ['User.Read', 'Profile']
 }, (req, iss, sub, profile, accessToken, refreshToken, done) => {
-	//console.log('req: ' + req);
-	//console.log('iss: ' + iss);
-	//console.log('sub: ' + sub);
-	//console.log(profile);
-	//console.log('accessToken: ' + accessToken);
-	//console.log('refreshToken: ' + refreshToken);
-	//console.log('done: ' + done);
   if (req.user) {
     User.findOne({ microsoft: profile.oid }, (err, existingUser) => {
       if (err) { return done(err); }
@@ -328,6 +321,7 @@ passport.use(new OIDCStrategy({
           user.microsoft = profile.oid;
           user.tokens.push({ kind: 'microsoft', accessToken });
           user.profile.name = user.profile.name || profile.displayName;
+          user.active = true;
           user.save((err) => {
             if (err) { return done(err); }
             req.flash('info', { msg: 'Microsoft account has been linked.' });
@@ -353,6 +347,7 @@ passport.use(new OIDCStrategy({
           user.tokens.push({ kind: 'microsoft', accessToken });
           user.email = profile._json.preferred_username;
           user.profile.name = profile.displayName;
+          user.active = true;
           user.save((err) => {
             done(err, user);
           });
@@ -436,11 +431,20 @@ exports.isAuthenticated = (req, res, next) => {
   res.redirect('/login');
 };
 
+/**
+ * Admin middleware
+ */
 exports.isAdmin = (req, res, next) => {
-    if(req.isAuthenticated() && req.user.admin == true){
+    if(req.isAuthenticated()){
+      if(req.user.admin){
         next();
-    } else {
+      }
+      else{
         req.flash('errors', { msg: 'You are not an admin.' });
+        res.redirect('/');
+      }
+    } else {
+        req.flash('errors', { msg: 'You are not logged in' });
         res.redirect('/login');
     }
 }

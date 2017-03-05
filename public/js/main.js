@@ -83,6 +83,40 @@ $(document).ready(function() {
   //     $("#img").attr("src", "small.png");
   //   }
   // }); 
+  // new Darkroom('#target', {
+  //   // Canvas initialization size
+  //   minWidth: 160,
+  //   minHeight: 160,
+  //   maxWidth: 900,
+  //   maxHeight: 900,
+ new Darkroom('#target', {
+  // Canvas initialization size
+  minWidth: 100,
+  minHeight: 100,
+  maxWidth: 500,
+  maxHeight: 500,
 
-
+   // Plugins options
+   plugins: {
+     crop: {
+       minHeight: 50,
+       minWidth: 50,
+       ratio: 1
+     },
+     save: {
+       callback: function(){
+         console.log('hello');
+         console.log(Cookies.get('_csrf'));
+         $.ajax({
+           type: "POST",
+           url: '/account/editedpicture',
+           data: {data: this.darkroom.sourceCanvas.toDataURL()},
+           headers: {
+             'X-CSRF-Token': Cookies.get('_csrf')
+           }
+         });
+       }
+     }
+   },
+ }); // });
 });

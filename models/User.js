@@ -4,11 +4,13 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
-	admin: {type: Boolean, default: false},
+  admin: {type: Boolean, default: false},
+  active: {type: Boolean, default: false},
   password: String,
   passwordResetToken: String,
   passwordResetExpires: Date,
-	player: {type: mongoose.Schema.Types.ObjectId, ref:  'Player' },
+  player: {type: mongoose.Schema.Types.ObjectId, ref:  'Player' },
+  activationToken: String,
 
   facebook: String,
   twitter: String,
@@ -25,7 +27,8 @@ const userSchema = new mongoose.Schema({
     gender: String,
     location: String,
     website: String,
-    picture: String
+    picture: String,
+    fullpicture: String
   }
 }, { timestamps: true });
 
