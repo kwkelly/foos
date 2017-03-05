@@ -300,7 +300,6 @@ exports.postUpdateProfile = (req, res, next) => {
  * Update profile image
  */
 exports.postProfilePicture = (req, res, next) => {
-  console.log(req.file)
   if(!req.file){
       req.flash('errors', { msg: 'File undefined.' });
       return res.redirect('/account');
@@ -308,7 +307,6 @@ exports.postProfilePicture = (req, res, next) => {
   User.findById(req.user.id, (err, user) => {
     if (err) { return next(err); }
     var fileName = req.file.filename;
-    console.log(fileName)
     fs.readFile(req.file.path, function (err, data) {
       /// If there's an error
       var newPath = "./uploads/fullsize/" + fileName;
@@ -321,8 +319,10 @@ exports.postProfilePicture = (req, res, next) => {
           dstPath: thumbPath,
           width:   200
         }, function(err, stdout, stderr){
-          if (err) throw err;
-          console.log('resized image to fit within 200x200px');
+          if (err) {
+            req.flash('success', { msg: 'Could not make thumbnail. Woops..' });
+            return res.redirect('/account');
+          }
           user.profile.picture = path.join('/thumbs', fileName);
           user.profile.fullpicture = path.join('/fullsize', fileName);
           user.save((err) => {
@@ -340,26 +340,21 @@ exports.postProfilePicture = (req, res, next) => {
  * Edit profile image with DarkroomJS`
  */
 exports.postEditedProfilePicture = (req, res, next) => {
-  console.log(Object.keys(req.body));
   var image = decodeBase64Image(req.body.data);
 
   var mimetype = image.type;
-  console.log('image.data');
-  console.log(image.data);
   crypto.pseudoRandomBytes(16, function (err, raw) {
     var fileName = raw.toString('hex') + Date.now() + '.' + mime.extension(mimetype);
     var newPath = "./uploads/fullsize/" + fileName;
     var thumbPath = "./uploads/thumbs/" + fileName;
     User.findById(req.user.id, (err, user) => {
       if (err) { return next(err); }
-      console.log(fileName)
       fs.writeFile(newPath, image.data, function(err) {
         if (err) {
           req.flash('errors', { msg: 'Something went wrong ¯\\_(ツ)_/¯' });
           return res.redirect('/account');
         }
         fs.readFile(newPath, function (err, data) {
-          console.log(data);
           fs.writeFile(newPath, data, function (err) {
             // write file to uploads/thumbs folder
             im.resize({
@@ -368,7 +363,6 @@ exports.postEditedProfilePicture = (req, res, next) => {
               width:   200
             }, function(err, stdout, stderr){
               if (err) {
-                console.log(err)
                 req.flash('errors', { msg: 'Something went wrong ¯\\_(ツ)_/¯' });
                 return res.redirect('/account');
               };

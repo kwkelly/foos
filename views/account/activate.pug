@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  .col-sm-8.col-sm-offset-2
+    form(method='POST')
+      legend Activate account
+      input(type='hidden', name='_csrf', value=_csrf)
+      .form-group
+        button.btn.btn-primary.btn-reset(type='submit')
+          i.fa.fa-power-off
+          | Activate
