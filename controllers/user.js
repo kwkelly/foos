@@ -110,12 +110,13 @@ exports.postSignup = (req, res, next) => {
     req.flash('errors', errors);
     return res.redirect('/signup');
   }
+  // if allowed domain is set, then we only allow signups from emails from that domain
   if(process.env.ALLOWED_DOMAIN){
-    var mail_regex = new RegExp("/^[A-Z0-9._%+-]+@" + process.env.ALLOWED_DOMAIN + "$/i")
-      if (!req.body.email.match(/^[A-Z0-9._%+-]+@gmail.com$/i)){
-        req.flash('errors', { msg: "Please only use approced email domains"});
-        return res.redirect('/signup');
-      }
+    var mail_regex = new RegExp("/^[A-Z0-9._%+-]+@" + process.env.ALLOWED_DOMAIN + "$/i");
+    if (!req.body.email.match(mail_regex)){
+      req.flash('errors', { msg: "Please only use approced email domains"});
+      return res.redirect('/signup');
+    }
   }
 
   const user = new User({
@@ -144,10 +145,10 @@ exports.postSignup = (req, res, next) => {
       },
       function sendActivationEmail(token, user, done) {
         const transporter = nodemailer.createTransport({
-          service: 'gmail',
+          service: 'mailgun',
           auth: {
-            user: process.env.GMAIL_USER,
-            pass: process.env.GMAIL_PASSWORD
+            user: process.env.MAILGUN_USER,
+            pass: process.env.MAILGUN_PASSWORD
           }
         });
         const mailOptions = {
