@@ -4,7 +4,8 @@ function matchButtonEnableDisable(){
     (((($('#redscore').val() == 10) && ($('#blackscore').val() < 10)) ||
       (($('#redscore').val() < 10) && ($('#blackscore').val() == 10))) ||
       ((($('#redscore').val() == "winner") && ($('#blackscore').val() == "")) ||
-        (($('#redscore').val() == "") && ($('#blackscore').val() == "winner"))))
+        (($('#redscore').val() == "") && ($('#blackscore').val() == "winner")))) &&
+    ($('#pickadate').val().length > 0)
   ){
     $('#matchsubmit').prop('disabled', false);
   }
@@ -69,6 +70,9 @@ $(document).ready(function() {
   $( function(){
     $(".score").on('change keyup paste',matchButtonEnableDisable);
   });
+  $( function(){
+    $("#pickadate").on('change keyup paste',matchButtonEnableDisable);
+  });
 
   // $('.input-group.date').datepicker({
   // });
@@ -106,4 +110,5 @@ $(document).ready(function() {
       }
     },
   }); // });
+  $('#rankings-table').tablesorter({sortList: [[2,1]]});
 });
