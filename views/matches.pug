@@ -1,0 +1,26 @@
+extends ./layout
+
+block content
+  .page-header
+    h3 Matches
+    table.table.table-hover.table-sm(id="match-table")
+      thead.table-inverse
+        tr
+          th Date
+          th Red 1
+          th Red 2
+          th Black 2
+          th Black 1
+        - var i = 0;
+        tbody
+          each match in matches
+            tr(class=i % 2 == 0 ? 'odd' : 'even')
+              td= match.date
+              td(class=(match.winner == "red") ? "win" : "")
+                =match.red1.name
+              td(class=(match.winner == "red") ? "win" : "")
+                =match.red2.name
+              td(class=(match.winner == "black") ? "win" : "")
+                =match.black2.name
+              td(class=(match.winner == "black") ? "win" : "")
+                =match.black1.name

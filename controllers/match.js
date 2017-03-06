@@ -18,7 +18,7 @@ function modifyRating(oldRating, expected, result, kFactor){
 
 /**
  * GET /match
- * Load the form to add a player
+ * Load the form to add a match
  */
 exports.getMatch = (req, res) => {
   Player.find({})
@@ -151,4 +151,17 @@ exports.postMatch = (req, res, next) => {
 };
 
 
-
+/**
+ * GET /matches
+ * Load the form to view all matches
+ */
+exports.getMatches = (req, res) => {
+  Match.find({})
+    .populate('red1 red2 black2 black1')
+    .exec(function(err, matches) {
+      res.render('matches', {
+        title: 'Matches',
+        matches: matches
+      });
+    });
+};

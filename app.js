@@ -212,6 +212,7 @@ app.get('/profile/:name', passportConfig.isAuthenticated, playerController.getPr
 app.get('/match', passportConfig.isAuthenticated, matchController.getMatch);
 app.post('/addmatch', passportConfig.isAuthenticated, matchController.postMatch);
 
+app.get('/matches', passportConfig.isAuthenticated, matchController.getMatches);
 /**
  * API examples routes.
  */
