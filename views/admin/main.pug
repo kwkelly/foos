@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Admin Panel
+
+  a.btn.btn-primary(href="/admin/database") Go to DB admin page
+
+  form.form-horizontal(action='/admin/recalcElo', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn.btn-primary(type='submit')
+          i.fa.fa-pencil
+          | Recalc Elo

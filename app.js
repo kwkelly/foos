@@ -92,6 +92,7 @@ const playerController = require('./controllers/player');
 const matchController = require('./controllers/match');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
+const adminController = require('./controllers/admin');
 
 /**
  * API keys and Passport configuration.
@@ -244,10 +245,15 @@ app.get('/auth/microsoft/callback', passport.authenticate('azuread-openidconnect
 });
 
 
+/**
+ * Admin stuff
+ */
 var mongo_express = require('mongo-express/lib/middleware')
 var mongo_express_config = require(process.env.ADMIN_CONFIG)
 
-app.use('/admin', passportConfig.isAdmin, mongo_express(mongo_express_config))
+app.use('/admin/database', passportConfig.isAdmin, mongo_express(mongo_express_config))
+app.get('/admin', passportConfig.isAdmin, adminController.getAdmin);
+app.post('/admin/recalcElo', passportConfig.isAdmin, adminController.recalcElo);
 
 /**
  * Error Handler.
