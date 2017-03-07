@@ -47,7 +47,7 @@ exports.recalcElo = (req, res, next) => {
       .populate('red1 red2 black1 black2')
       .exec((err, matches) => {
         if (err) { return next(err); }
-        for (var match of matches){
+        async.eachSeries(matches,function(match, cb){
           Player.findOne({_id: match.red1}, (err, red1) => {
             if (err) { return next(err); }
             if (!red1) {
@@ -98,23 +98,24 @@ exports.recalcElo = (req, res, next) => {
                   }
                   red1.save((err) => {
                     if (err) { return next(err); }
-                  });
-                  red2.save((err) => {
-                    if (err) { return next(err); }
-                  });
-                  black1.save((err) => {
-                    if (err) { return next(err); }
-                  });
-                  black2.save((err) => {
-                    if (err) { return next(err); }
+                    red2.save((err) => {
+                      if (err) { return next(err); }
+                      black1.save((err) => {
+                        if (err) { return next(err); }
+                        black2.save((err) => {
+                          if (err) { return next(err); }
+                          cb(null);
+                        });
+                      });
+                    });
                   });
                 });
               });
             });
           });
-        }
-        req.flash('success',{msg : 'scores updated'})
-        return res.redirect('/admin')
+        });
       });
   });
+        req.flash('success',{msg : 'scores updated'})
+        return res.redirect('/admin')
 };
