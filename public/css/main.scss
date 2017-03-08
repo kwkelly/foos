@@ -139,6 +139,7 @@ textarea {
   .super-contain {
     max-width: 50%;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     //max-height: 90vh;
     max-height: 700px;
