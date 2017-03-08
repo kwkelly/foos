@@ -109,6 +109,6 @@ $(document).ready(function() {
         }
       }
     },
-  }); // });
+  });
   $('#rankings-table').tablesorter({sortList: [[2,1]]});
 });

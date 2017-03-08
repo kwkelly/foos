@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 const passport = require('passport');
 const Player = require('../models/Player');
 const User = require('../models/User');
+const d3 = require('d3');
 
 /**
  * get /player
@@ -60,9 +61,16 @@ exports.getProfile = (req, res) => {
  * List all the players and rankings
  */
 exports.getRankings = (req, res) => {
+  var format = d3.format('.0f');
   Player.find({})
+    .where('gamesPlayed').gt(0)
     .populate('account')
     .exec(function(err, players) {
+      async.each(players, (player, cb) => {
+        player.eloRating = format(player.eloRating);
+      }, (err) => {
+        console.log(err);
+      });
       res.render('rankings', {
         title: 'Rankings',
         players: players

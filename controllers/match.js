@@ -119,6 +119,8 @@ exports.postMatch = (req, res, next) => {
             black2.eloRating = modifyRating(black2.eloRating, winnerExp, 1, 50);
             red1.eloRating = modifyRating(red1.eloRating, loserExp, 0, 50);
             red2.eloRating = modifyRating(red2.eloRating, loserExp, 0, 50);
+            black1.wins++;
+            black2.wins++;
           }
           if(winner == "red"){
             var winnerAvg = (red1.eloRating + red2.eloRating)/2;
@@ -129,21 +131,23 @@ exports.postMatch = (req, res, next) => {
             black2.eloRating = modifyRating(black2.eloRating, loserExp, 0, 50);
             red1.eloRating = modifyRating(red1.eloRating, winnerExp, 1, 50);
             red2.eloRating = modifyRating(red2.eloRating, winnerExp, 1, 50);
+            red1.wins++;
+            red2.wins++;
           }
           red1.save((err) => {
             if (err) { return next(err); }
+            red2.save((err) => {
+              if (err) { return next(err); }
+              black1.save((err) => {
+                if (err) { return next(err); }
+                black2.save((err) => {
+                  if (err) { return next(err); }
+                  req.flash('success', { msg: 'Match added' });
+                  return res.redirect('/match')
+                });
+              });
+            });
           });
-          red2.save((err) => {
-            if (err) { return next(err); }
-          });
-          black1.save((err) => {
-            if (err) { return next(err); }
-          });
-          black2.save((err) => {
-            if (err) { return next(err); }
-          });
-          req.flash('success', { msg: 'Match added' });
-          return res.redirect('/match')
         });
       });
     });

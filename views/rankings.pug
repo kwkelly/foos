@@ -9,6 +9,8 @@ block content
           th Image
           th Handle
           th Rating
+          th Games
+          th Wins
         - var i = 0;
         tbody
           each player in players
@@ -21,4 +23,6 @@ block content
               td
                 a(href='/profile/' + player.name)
                   =player.name
-              td= player.eloRating
+              td.format-int= player.eloRating
+              td= player.gamesPlayed
+              td= player.wins

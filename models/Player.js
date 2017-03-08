@@ -6,7 +6,8 @@ const playerSchema = new mongoose.Schema({
   name: {type: String, unique: true},
   eloRating: { type: Number, default: 1000 },
   account: {type: mongoose.Schema.Types.ObjectId, ref:  'User' },
-	gamesPlayed: {type: Number, default: 0}
+  gamesPlayed: {type: Number, default: 0},
+  wins: {type: Number, default: 0}
 })
 
 playerSchema.methods.gravatar = function gravatar(size) {
