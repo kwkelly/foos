@@ -214,6 +214,9 @@ app.get('/match', passportConfig.isAuthenticated, matchController.getMatch);
 app.post('/addmatch', passportConfig.isAuthenticated, matchController.postMatch);
 
 app.get('/matches', passportConfig.isAuthenticated, matchController.getMatches);
+
+app.use( "/about/bylaws", [ passportConfig.isAuthenticated, (req,res,next) => {res.sendFile(path.join(__dirname, '/static/Foosball Underground ByLaws.pdf'))} ] );
+
 /**
  * API examples routes.
  */
