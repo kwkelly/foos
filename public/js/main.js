@@ -110,5 +110,6 @@ $(document).ready(function() {
       }
     },
   });
-  $('#rankings-table').tablesorter({sortList: [[2,1]]});
+  $('#rankings-table').tablesorter({sortList: [[3,1]]});
+	$('#rankings-table th').css('cursor', 'pointer');
 });

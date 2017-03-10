@@ -6,15 +6,16 @@ block content
     table.table.table-hover.table-sm(id="rankings-table")
       thead.table-inverse
         tr
-          th Image
-          th Handle
-          th Rating
-          th Games
-          th Wins
-        - var i = 0;
+          th Rank ⇅
+          th Image ⇅
+          th Handle ⇅
+          th Rating ⇅
+          th Games ⇅
+          th Wins ⇅
         tbody
-          each player in players
-            tr(class=i % 2 == 0 ? 'odd' : 'even')
+          each player, idx in players
+            tr
+              td.rank-num= idx+1+'.'
               td
                 if player.account
                   img.rankings.img-circle(src=player.account.profile.picture || player.account.gravatar(), alt=player.name)

@@ -65,6 +65,7 @@ exports.getRankings = (req, res) => {
   Player.find({})
     .where('gamesPlayed').gt(0)
     .populate('account')
+    .sort('-eloRating')
     .exec(function(err, players) {
       async.each(players, (player, cb) => {
         player.eloRating = format(player.eloRating);

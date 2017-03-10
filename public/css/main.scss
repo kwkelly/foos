@@ -142,7 +142,7 @@ textarea {
     -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
     //max-height: 90vh;
-    max-height: 700px;
+    max-height: 650px;
     float: left;
   }
   .fields {
@@ -256,4 +256,8 @@ img.rankings {
 
 td.win {
   background-color: #27ae60;
+}
+
+.rank-num {
+  font-size: medium;
 }
