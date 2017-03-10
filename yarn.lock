@@ -1031,7 +1031,7 @@ d3-shape@1.0.5:
   dependencies:
     d3-path "1"
 
-d3-time-format@2, d3-time-format@2.0.4:
+d3-time-format@2, d3-time-format@2.0.4, d3-time-format@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/d3-time-format/-/d3-time-format-2.0.4.tgz#db0ab6910b3f2fc729a2ddfd2ac1b750962e1f72"
   dependencies:

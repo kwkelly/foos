@@ -5,6 +5,7 @@ const passport = require('passport');
 const Player = require('../models/Player');
 const User = require('../models/User');
 const Match = require('../models/Match');
+const d3 = require('d3');
 
 function getExpectation(rating_1, rating_2){
   var calc = (1.0 / (1.0 + Math.pow(10, ((rating_2 - rating_1) / 1000))));
@@ -21,14 +22,30 @@ function modifyRating(oldRating, expected, result, kFactor){
  * Load the form to add a match
  */
 exports.getMatch = (req, res) => {
-  Player.find({})
-    .populate('account')
-    .exec(function(err, players) {
-      res.render('match', {
-        title: 'Add Match',
-        players: players
-      });
-    });
+	Player.find({})
+		.populate('account')
+		.exec(function(err, players) {
+			if (err) { return next(err); }
+			Match.find({})
+				.populate('red1 red2 black1 black2')
+				.sort({'_id': -1})
+				.limit(3)
+				.exec((err, matches) => {
+					if (err) { return next(err); }
+					var format = d3.timeFormat('%x');
+					async.map(matches, (match, cb) => {
+						cb(null, format(d3.isoParse(match.date)));
+					}, (err, dates) => {
+						console.log(err);
+						res.render('match', {
+							title: 'Add Match',
+							players: players,
+							matches: matches,
+							dates, dates
+						});
+					});
+				})
+		});
 };
 
 /**
@@ -160,12 +177,18 @@ exports.postMatch = (req, res, next) => {
  * Load the form to view all matches
  */
 exports.getMatches = (req, res) => {
-  Match.find({})
-    .populate('red1 red2 black2 black1')
-    .exec(function(err, matches) {
-      res.render('matches', {
-        title: 'Matches',
-        matches: matches
-      });
-    });
+	Match.find({})
+		.populate('red1 red2 black2 black1')
+		.exec(function(err, matches) {
+			var format = d3.timeFormat('%x');
+			async.map(matches, (match, cb) => {
+				cb(null, format(d3.isoParse(match.date)));
+			}, (err, dates) => {
+				res.render('matches', {
+					title: 'Matches',
+					matches: matches,
+					dates, dates
+				});
+			});
+		});
 };

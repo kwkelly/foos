@@ -11,11 +11,10 @@ block content
           th Red 2
           th Black 2
           th Black 1
-        - var i = 0;
         tbody
-          each match in matches
-            tr(class=i % 2 == 0 ? 'odd' : 'even')
-              td= match.date
+          each match, idx in matches
+            tr
+              td= dates[idx]
               td(class=(match.winner == "red") ? "win" : "")
                 =match.red1.name
               td(class=(match.winner == "red") ? "win" : "")

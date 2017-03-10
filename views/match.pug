@@ -40,3 +40,27 @@ block content
         button.btn.btn-success(type='submit', id="matchsubmit", disabled="true")
           i.fa.fa-gamepad
           | Add match
+
+  div.recently-added
+    h3 Recently Added Matches
+    table.table.table-hover.table-sm(id="match-table")
+      thead.table-inverse
+        tr
+          th Date
+          th Red 1
+          th Red 2
+          th Black 2
+          th Black 1
+        tbody
+          each match, idx in matches
+            tr
+              td= dates[idx]
+              td(class=(match.winner == "red") ? "win" : "")
+                =match.red1.name
+              td(class=(match.winner == "red") ? "win" : "")
+                =match.red2.name
+              td(class=(match.winner == "black") ? "win" : "")
+                =match.black2.name
+              td(class=(match.winner == "black") ? "win" : "")
+                =match.black1.name
+
